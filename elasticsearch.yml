@@ -1,0 +1,65 @@
+## This enough of an elasticsearch.yml file to get you up and running. 
+## Originally written for .9x versions, and updated for 1.4.x features. 
+## Ray Sanders - rjs@raymondjsanders.com
+## Jan 2015
+######
+
+### begin elasticsearch.yml
+bootstrap.mlockall: true
+cluster.name: your_cluster_name_goes_here
+
+index:
+  cache:
+    field:
+      max_size: 10000
+      type: soft
+  refresh_interval: 30s
+  translog:
+    flush_threshold_ops: 50000
+  ## number_of_shards is configured for a 3 node cluster, expand shards as needed to match the number
+  ## of nodes in your cluster. Meaning a 6 node cluster should have 6 nodes
+  number_of_shards: 3
+  number_of_replicas: 1
+  
+indices:
+  fielddata:
+    breaker:
+      limit: 60%
+      overhead: 1.1
+    cache:
+      size: 25%
+  memory:
+    index_buffer_size: 30%
+    
+#node.data controls if the node handles data
+node.data: true
+#node.master controls if the node is a master node
+node.master: true
+node.name: es-node-name
+
+path:
+  data: /path/where/you/want/data/written
+  logs: /path/to/logs
+  plugins: /es_install_dir/elasticsearch/plugins
+  work: /var/tmp/elasticsearch
+
+threadpool:
+  bulk:
+    queue_size: 300
+    size: 60
+    type: fixed
+  index:
+    queue_size: 100
+    size: 20
+    type: fixed
+  search:
+    queue_size: 100
+    size: 40
+    type: fixed
+    
+cluster.routing.allocation.node_initial_primaries_recoveries: 20
+cluster.routing.allocation.node_concurrent_recoveries: 10
+indices.recovery.concurrent_streams: 5
+cluster.routing.allocation.allow_rebalance: always
+cluster.routing.allocation.cluster_concurrent_rebalance: 10
+cluster.routing.allocation.enable: all
