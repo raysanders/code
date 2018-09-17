@@ -23,10 +23,15 @@ def lambda_handler(event,context):
         Select="ALL_ATTRIBUTES",
     )
     
-  body = ''
+ body = ''
     for i in response['Items']:
         #print(json.dumps(i, indent=2, sort_keys=True, separators=(',', ': '), cls=DecimalEncoder))
+        count =len(i)
+        #if count > 0:
+        #    print (',')
         body += (json.dumps(i, indent=2, sort_keys=True, separators=(',', ': '), cls=DecimalEncoder))
+        if count > 0:
+            body +=(',\n')
     
     response = s3.put_object(Bucket='YOUR_S3_BUCKET',
     Key='YOUR_FILENAME.json',
