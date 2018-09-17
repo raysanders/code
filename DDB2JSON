@@ -23,15 +23,25 @@ def lambda_handler(event,context):
         Select="ALL_ATTRIBUTES",
     )
     
- body = ''
+   body = '[\n' #need to add the initial '['' to the JSON
+   count = 2 # this is how many items in the array - need to write code to get this directly from the array. 
+    
+    #print ('[')
     for i in response['Items']:
+        #(we need to get the initial value from the array, somehow. "items(len)" returns elements in each section)
+        count = count  - 1 # decrease count by one for each pass through array
+        
         #print(json.dumps(i, indent=2, sort_keys=True, separators=(',', ': '), cls=DecimalEncoder))
-        count =len(i)
         #if count > 0:
-        #    print (',')
+        #    print(',')
+        #else: 
+        #    print(']')
+            
         body += (json.dumps(i, indent=2, sort_keys=True, separators=(',', ': '), cls=DecimalEncoder))
         if count > 0:
             body +=(',\n')
+        else: 
+            body +=('\n]')
     
     response = s3.put_object(Bucket='YOUR_S3_BUCKET',
     Key='YOUR_FILENAME.json',
