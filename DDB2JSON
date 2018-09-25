@@ -24,11 +24,10 @@ def lambda_handler(event,context):
     )
     
    body = '[\n' #need to add the initial '['' to the JSON
-   count = 2 # this is how many items in the array - need to write code to get this directly from the array. 
+   count = len(response) # this is how many items in the array 
     
     #print ('[')
     for i in response['Items']:
-        #(we need to get the initial value from the array, somehow. "items(len)" returns elements in each section)
         count = count  - 1 # decrease count by one for each pass through array
         
         #print(json.dumps(i, indent=2, sort_keys=True, separators=(',', ': '), cls=DecimalEncoder))
