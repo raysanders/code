@@ -6,7 +6,7 @@
 # if not, simply replace localhost with the full hostname or IP of the graphite server. 
 #
 # 
-# Ray Sanders - rjs@raymondjsanders.com
+# Ray Sanders - rjs.devops@raymondjsanders.com
 #
 #
 ###################################
